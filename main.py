@@ -132,4 +132,4 @@ class AppMemoria(App):
 
 
 if __name__ == "__main__":
-    AppMemoria().run()git --version
+    AppMemoria().run()
