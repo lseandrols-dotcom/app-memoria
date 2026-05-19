@@ -7,13 +7,12 @@ from kivy.clock import Clock
 from kivy.core.window import Window
 import random
 
-Window.size = (360, 640)
-Window.clearcolor = (0.08, 0.09, 0.11, 1)
+Window.clearcolor = (0.06, 0.07, 0.09, 1)
 
 
 class JogoMemoria(BoxLayout):
     def __init__(self, **kwargs):
-        super().__init__(orientation="vertical", padding=18, spacing=12, **kwargs)
+        super().__init__(orientation="vertical", padding=30, spacing=18, **kwargs)
 
         self.nivel = 1
         self.sequencia = []
@@ -21,52 +20,52 @@ class JogoMemoria(BoxLayout):
 
         self.titulo = Label(
             text="Treino de Memória",
-            font_size=24,
+            font_size=34,
             bold=True,
-            size_hint=(1, 0.12)
+            size_hint=(1, 0.15)
         )
 
         self.nivel_label = Label(
             text="Nível 1",
-            font_size=18,
-            size_hint=(1, 0.08)
+            font_size=26,
+            size_hint=(1, 0.10)
         )
 
         self.numero_label = Label(
-            text="Iniciar",
-            font_size=44,
+            text="Toque em iniciar",
+            font_size=58,
             bold=True,
-            size_hint=(1, 0.32)
+            size_hint=(1, 0.35)
         )
 
         self.entrada = TextInput(
             hint_text="Digite a sequência",
             multiline=False,
-            font_size=22,
+            font_size=34,
             halign="center",
             input_filter="int",
-            size_hint=(1, 0.10)
+            size_hint=(1, 0.12)
         )
         self.entrada.disabled = True
 
         self.botao_verificar = Button(
             text="Verificar",
-            font_size=20,
-            size_hint=(1, 0.10)
+            font_size=28,
+            size_hint=(1, 0.12)
         )
         self.botao_verificar.disabled = True
         self.botao_verificar.bind(on_press=self.verificar)
 
         self.botao_iniciar = Button(
             text="Iniciar jogo",
-            font_size=20,
-            size_hint=(1, 0.10)
+            font_size=28,
+            size_hint=(1, 0.12)
         )
         self.botao_iniciar.bind(on_press=self.iniciar_jogo)
 
         self.info = Label(
             text="Memorize cada número e digite a sequência.",
-            font_size=13,
+            font_size=18,
             size_hint=(1, 0.08)
         )
 
@@ -87,7 +86,6 @@ class JogoMemoria(BoxLayout):
         self.entrada.text = ""
         self.entrada.disabled = True
         self.botao_verificar.disabled = True
-
         self.nivel_label.text = f"Nível {self.nivel}"
 
         numero = random.randint(0, 9)
@@ -99,7 +97,7 @@ class JogoMemoria(BoxLayout):
     def mostrar_numero(self, dt=None):
         if self.indice < len(self.sequencia):
             self.numero_label.text = str(self.sequencia[self.indice])
-            Clock.schedule_once(self.esconder_numero, 0.7)
+            Clock.schedule_once(self.esconder_numero, 0.8)
         else:
             self.numero_label.text = "Digite"
             self.entrada.disabled = False
@@ -109,7 +107,7 @@ class JogoMemoria(BoxLayout):
     def esconder_numero(self, dt=None):
         self.numero_label.text = ""
         self.indice += 1
-        Clock.schedule_once(self.mostrar_numero, 0.3)
+        Clock.schedule_once(self.mostrar_numero, 0.35)
 
     def verificar(self, instance=None):
         resposta = self.entrada.text.strip()
@@ -118,7 +116,7 @@ class JogoMemoria(BoxLayout):
         self.entrada.text = ""
 
         if resposta == correta:
-            self.numero_label.text = "Certo!"
+            self.numero_label.text = "Acertou!"
             self.nivel += 1
             Clock.schedule_once(lambda dt: self.nova_rodada(), 1)
         else:
